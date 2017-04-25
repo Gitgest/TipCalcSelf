@@ -52,7 +52,10 @@
         <SeekBar
             android:id="@+id/percentSeekBar"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="@dimen/seekbar_height"
+            android:layout_gravity="fill_horizontal"
+            android:max="30"
+            android:progress="15" />
 
         <TextView
             android:id="@+id/tipLabelTextView"

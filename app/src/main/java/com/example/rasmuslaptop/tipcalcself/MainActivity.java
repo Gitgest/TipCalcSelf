@@ -51,6 +51,7 @@ public class MainActivity extends Activity {
         SeekBar percentSeekBar =
                 (SeekBar) findViewById(R.id.percentSeekBar);
         percentSeekBar.setOnSeekBarChangeListener(seekBarListener);
+    }
 
         // calculate and display tip and total amounts
         private void calculate(){
@@ -63,9 +64,8 @@ public class MainActivity extends Activity {
 
         //display tip and total formatted as currency
         tipTextView.setText(currencyFormat.format(tip));
-        totalTextView.setText(currencyFormat.format(total))
+        totalTextView.setText(currencyFormat.format(total));
     }
-
 
 
     // listener object for the SeekBar's progress changed events
@@ -78,14 +78,37 @@ public class MainActivity extends Activity {
                 }
 
                 @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-
-                }
+                public void onStartTrackingTouch(SeekBar seekBar) {}
 
                 @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
+                public void onStopTrackingTouch(SeekBar seekBar) {}
+            };
 
-                }
+
+
+    // listener object for the EditText's text-changed events
+    private final TextWatcher amountEditTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            try { //get bill amount and display currency formatted value
+                billAmount = Double.parseDouble(s.toString()) / 100.0;
+                amountTextView.setText(currencyFormat.format(billAmount));
+            } catch (NumberFormatException e) { // if s is empty or non-numeric
+                amountTextView.setText("");
+                billAmount = 0.0;
             }
 
+            calculate();
+        }
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 }
